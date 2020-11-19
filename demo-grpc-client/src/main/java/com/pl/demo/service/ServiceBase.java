@@ -4,15 +4,15 @@ import com.pl.demo.dto.HelloDto;
 
 import java.util.List;
 
-public interface HelloService {
+public interface ServiceBase {
+
+    HelloDto getGreeting(int id);
 
     HelloDto createGreeting(String greeting);
 
     HelloDto updateGreeting(int id, String greeting);
 
-    void delete(int id);
+    void deleteGreeting(int id);
 
-    HelloDto get(int id);
-
-    List<HelloDto> getAll();
+    List<HelloDto> getAllGreetings();
 }

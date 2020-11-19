@@ -1,3 +1,7 @@
+plugins {
+    id "com.google.protobuf" version "0.8.13"
+}
+
 apply plugin: 'java'
 apply plugin: 'com.google.protobuf'
 
@@ -10,20 +14,8 @@ repositories {
     mavenCentral()
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
-    }
-}
-
 dependencies {
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 protobuf {
