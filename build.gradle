@@ -1,10 +1,13 @@
 plugins {
     id 'java'
+    id 'java-library'
 }
+
+apply plugin: 'application'
 
 group = 'com.pl'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -16,8 +19,13 @@ wrapper{
     gradleVersion = '6.7'
 }
 
-wrapper{
-    gradleVersion = '6.7'
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.pl.demo.DemoApplication', 'com.pl.demo.DemoGrpcApplication'
+        )
+    }
 }
 
 repositories {

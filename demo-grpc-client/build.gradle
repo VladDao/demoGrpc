@@ -11,10 +11,11 @@ def protocVersion = '3.13.0'
 
 apply plugin: 'com.google.protobuf'
 apply plugin: 'idea'
+apply plugin: 'application'
 
 group 'com.pl'
 version '0.0.1-SNAPSHOT'
-sourceCompatibility = '15'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
