@@ -27,6 +27,11 @@ public class Controller {
         this.helloService = helloService;
     }
 
+    @GetMapping("/health")
+    public String healthCheck(){
+        return "ok";
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<String> get(@PathVariable("id") int id) {
         HelloDto helloDto = helloService.get(id);

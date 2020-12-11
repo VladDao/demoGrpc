@@ -33,9 +33,9 @@ dependencies {
 
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter'
     implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure'
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
-    compile "io.grpc:grpc-netty:${grpcVersion}"
+    implementation "io.grpc:grpc-netty:${grpcVersion}"
 
     implementation group: 'io.grpc', name: 'grpc-stub', version: '1.33.1'
     implementation group: 'io.grpc', name: 'grpc-api', version: '1.33.1'
@@ -61,6 +61,10 @@ sourceSets {
 
 bootJar {
     enabled = false
+}
+
+jar {
+    enabled = true
 }
 
 idea {
