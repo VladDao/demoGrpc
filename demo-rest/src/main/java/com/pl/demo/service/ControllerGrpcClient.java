@@ -16,13 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/base/grpc")
+@RequestMapping("/grpc")
 public class ControllerGrpcClient {
 
     private final ServiceBase helloService;
 
     public ControllerGrpcClient(ServiceBase helloService) {
         this.helloService = helloService;
+    }
+
+    @GetMapping("/health")
+    public String healthCheck(){
+        return "ok";
     }
 
     @GetMapping("/{id}")
@@ -58,7 +63,12 @@ public class ControllerGrpcClient {
 
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        List<HelloDto> helloDto = helloService.getAllGreetings();
-        return ResponseEntity.ok(helloDto);
+        List<HelloDto> helloDto;
+        try{
+            helloDto  = helloService.getAllGreetings();
+            return ResponseEntity.ok(helloDto);
+        } catch (Exception e){
+            return  ResponseEntity.ok("error");
+        }
     }
 }
