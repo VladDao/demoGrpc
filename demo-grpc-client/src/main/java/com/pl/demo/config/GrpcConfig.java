@@ -14,7 +14,7 @@ public class GrpcConfig {
 
     @Bean
     public ManagedChannel managedChannel(ClientBaseConfig clientBaseConfig) {
-        return ManagedChannelBuilder.forAddress(clientBaseConfig.getHost(), clientBaseConfig.getPort())
+        return ManagedChannelBuilder.forAddress(clientBaseConfig.getHost(), Integer.parseInt(clientBaseConfig.getPort()))
             .usePlaintext()
             .build();
     }

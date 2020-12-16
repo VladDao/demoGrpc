@@ -18,6 +18,7 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
+        System.out.println(dbProperty);
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setServerNames(new String[]{dbProperty.getServer()});
         ds.setPortNumbers(new int[]{dbProperty.getPort()});
@@ -29,6 +30,8 @@ public class AppConfig {
 
     @Bean
     public Flyway migrate(DataSource dataSource) {
+        System.out.println(dataSource);
+        System.out.println("dbProperty schema = " + dbProperty.getSchema());
         Flyway flyway =
             Flyway.configure()
                 .locations("classpath:/db/migration")

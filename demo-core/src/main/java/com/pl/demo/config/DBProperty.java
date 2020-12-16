@@ -1,12 +1,13 @@
 package com.pl.demo.config;
 
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Data
 @Configuration
+@ToString
 @ConfigurationProperties(prefix = "spring.database")
 public class DBProperty {
 

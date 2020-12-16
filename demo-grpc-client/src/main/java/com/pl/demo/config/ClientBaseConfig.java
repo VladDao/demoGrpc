@@ -11,5 +11,5 @@ import org.springframework.context.annotation.PropertySource;
 public class ClientBaseConfig {
 
     private String host;
-    private Integer port;
+    private String port;
 }

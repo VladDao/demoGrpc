@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: default
+data:
+  postgres_user: postgres
+  postgres_password: postgres
+  postgres_db : demo
+  spring_database_username  : postgres
+  spring_database_password : postgres
+  spring_database_schema : public
+  spring_database_db : demo
+  spring_database_port : '5432'
+  spring_database_server: localhost
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-serv
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: grpc-serv
+  replicas: 1
+  template:
+    metadata:
+      name: grpc-serv
+      labels:
+        app: grpc-serv
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+      containers:
+        - image: postgres
+          name: postgres
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: demo
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+              hostPort: 5432
+              name: postgres
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+        - name: grpc-serv
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9091
+              name: grpc-serv
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: demo
+            - name: SPRING_DATABASE_USERNAME
+              value: postgres
+            - name: SPRING_DATABASE_PASSWORD
+              value: postgres
+            - name: SPRING_DATABASE_SCHEMA
+              value: public
+            - name: SPRING_DATABASE_DB
+              value: demo
+            - name: SPRING_DATABASE_PORT
+              value: '5432'
+            - name: POSTGRES_HOST
+              value: localhost
+            - name: SPRING_DATABASE_SERVER
+              value: localhost
+          image: ameleshko/grpc:grpc-serv
