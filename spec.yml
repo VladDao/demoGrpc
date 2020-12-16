@@ -16,17 +16,14 @@ spec:
     spec:
       containers:
         - name: grpc-serv
+          ports:
+            - containerPort: 9091
+              name: grpc-serv
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: postgres_user
+              value: postgres
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: postgres_password
+              value: postgres
             - name: POSTGRES_HOST
               value: localhost
           image: ameleshko/grpc:grpc-serv
@@ -34,15 +31,9 @@ spec:
           name: postgres
           env:
             - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: postgres_user
+              value: postgres
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
-                  key: postgres_password
+              value: postgres
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
