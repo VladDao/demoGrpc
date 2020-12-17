@@ -92,3 +92,34 @@ spec:
             - name: SPRING_DATABASE_SERVER
               value: localhost
           image: ameleshko/grpc:grpc-serv
+        - name: client
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+              name: client
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: demo
+            - name: SPRING_DATABASE_USERNAME
+              value: postgres
+            - name: SPRING_DATABASE_PASSWORD
+              value: postgres
+            - name: SPRING_DATABASE_SCHEMA
+              value: public
+            - name: SPRING_DATABASE_DB
+              value: demo
+            - name: SPRING_DATABASE_PORT
+              value: '5432'
+            - name: POSTGRES_HOST
+              value: localhost
+            - name: SPRING_DATABASE_SERVER
+              value: localhost
+            - name: DEMO_SERVER_HOST
+              value: localhost
+            - name: DEMO_SERVER_PORT
+              value: '9091'
+          image: ameleshko/client:latest
